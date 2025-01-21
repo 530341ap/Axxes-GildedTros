@@ -25,7 +25,11 @@ namespace GildedTros.App
             {
                 if (item.Quality > 0)
                 {
-                    item.Quality = item.SellIn <= 0 && item.Quality > 1 ? item.Quality - 2 : item.Quality - 1;
+                    item.Quality = DecreaseItem(item);
+                    if (smellyItems.Contains(item.Name) && item.Quality > 0)
+                    {
+                        item.Quality = DecreaseItem(item);
+                    } 
                 }
                 item.SellIn = item.SellIn - 1;
             }
@@ -60,6 +64,11 @@ namespace GildedTros.App
         private bool IsIncreasingItem(string name)
         {
             return name.Equals(goodWine) || backstagePasses.Contains(name);
+        }
+
+        private int DecreaseItem(Item item)
+        {
+            return item.SellIn <= 0 && item.Quality > 1 ? item.Quality - 2 : item.Quality - 1;
         }
     }
 }
